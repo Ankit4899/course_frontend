@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import API from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import AppLayout from "../layouts/AppLayout";
 
@@ -17,15 +18,21 @@ export default function Dashboard() {
           return;
         }
 
-        const res = await axios.get(
-          "http://localhost:5000/api/auth/me",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        // const res = await axios.get(
+        //   "http://localhost:5000/api/auth/me",
+        //   {
+        //     headers: {
+        //       Authorization: `Bearer ${token}`,
+        //     },
+        //   }
+        // );
 
+        const res = await API.get("/api/auth/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        
         setUser(res.data);
       } catch (err) {
         console.error(err);
