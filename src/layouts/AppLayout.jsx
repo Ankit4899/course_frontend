@@ -1,32 +1,47 @@
 // import Sidebar from "../components/Sidebar";
+// import { useSidebar } from "../context/SidebarContext";
 
 // export default function AppLayout({ children }) {
+//   const { collapsed } = useSidebar();
+
 //   return (
-//     <div className="flex bg-[#0b0f19] min-h-screen text-white">
+//     <div className="bg-[#0b0f19] min-h-screen text-white">
 //       <Sidebar />
 
-//       {/* MAIN CONTENT AREA */}
-//       <div className="ml-64 w-full">
+//       <main
+//         className={`transition-all duration-300
+//         ${collapsed ? "ml-20" : "ml-64"}`}
+//       >
 //         {children}
-//       </div>
+//       </main>
 //     </div>
 //   );
 // }
 
-
 import Sidebar from "../components/Sidebar";
 import { useSidebar } from "../context/SidebarContext";
+import { useAuth } from "../context/AuthContext";
 
 export default function AppLayout({ children }) {
   const { collapsed } = useSidebar();
+  const { loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#0b0f19] text-white">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#0b0f19] min-h-screen text-white">
       <Sidebar />
 
       <main
-        className={`transition-all duration-300
-        ${collapsed ? "ml-20" : "ml-64"}`}
+        className={`transition-all duration-300 ${
+          collapsed ? "ml-20" : "ml-64"
+        }`}
       >
         {children}
       </main>
